@@ -116,7 +116,7 @@ export default function ChatPanel({ onLog }: Readonly<ChatPanelProps>) {
         </div>
         <button
           onClick={clearChat}
-          className="text-sm text-gray-500 hover:text-gray-700 px-2 py-1 rounded"
+          className="text-sm text-gray-500 cursor-pointer hover:text-gray-700 px-2 py-1 rounded"
         >
           Clear
         </button>

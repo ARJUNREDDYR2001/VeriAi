@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Shield,
-  Lock,
-  Unlock,
-  AlertCircle,
-  CheckCircle,
-  Play,
-  Zap,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { Shield, Lock, Unlock, AlertCircle, CheckCircle, Play, Zap, Eye, EyeOff, ShieldCheck, AlertTriangle } from "lucide-react";
 import axios from "axios";
 
 interface HandshakeStatus {
@@ -20,6 +10,7 @@ interface HandshakeStatus {
   session_token?: string;
   anomaly_score?: number;
   nonce?: string;
+  fakeAgentDetected?: boolean;
 }
 
 interface SecurePanelProps {
@@ -261,6 +252,11 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
 
   const simulateFakeAgent = async () => {
     setIsLoading(true);
+    // Reset to initial state before starting fake agent simulation
+    setHandshakeStatus({
+      status: "idle",
+      fakeAgentDetected: undefined
+    });
     onLog("🎭 Simulating fake agent attack...");
 
     try {
@@ -268,8 +264,18 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
 
       if (response.data.detected) {
         onLog("🚨 Fake agent detected and blocked!");
+        // Set status to failed when fake agent is detected
+        setHandshakeStatus({
+          status: "failed",
+          fakeAgentDetected: true,
+          handshake_id: response.data.handshake_id
+        });
       } else {
         onLog("⚠️ Fake agent not detected - security breach!");
+        setHandshakeStatus({
+          status: "failed",
+          fakeAgentDetected: false
+        });
       }
     } catch (error: any) {
       onLog(
@@ -277,26 +283,19 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
           error.response?.data?.detail || error.message
         }`
       );
+      setHandshakeStatus({
+        status: "failed",
+        fakeAgentDetected: false
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const getStatusColor = () => {
-    switch (handshakeStatus.status) {
-      case "verified":
-        return "text-green-600";
-      case "failed":
-        return "text-red-600";
-      case "started":
-      case "responded":
-        return "text-blue-600";
-      default:
-        return "text-gray-600";
-    }
-  };
-
   const getStatusIcon = () => {
+    if (handshakeStatus.fakeAgentDetected) {
+      return <AlertTriangle className="w-5 h-5 text-red-600" />;
+    }
     switch (handshakeStatus.status) {
       case "verified":
         return <CheckCircle className="w-5 h-5 text-green-600" />;
@@ -307,6 +306,41 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
         return <Shield className="w-5 h-5 text-blue-600 animate-pulse" />;
       default:
         return <Shield className="w-5 h-5 text-gray-600" />;
+    }
+  };
+
+  const getStatusText = () => {
+    if (handshakeStatus.fakeAgentDetected) {
+      return "SECURITY ALERT: FAKE AGENT DETECTED";
+    }
+    switch (handshakeStatus.status) {
+      case "verified":
+        return "VERIFIED";
+      case "failed":
+        return "HANDSHAKE FAILED";
+      case "started":
+        return "HANDSHAKE STARTED";
+      case "responded":
+        return "RESPONSE RECEIVED";
+      default:
+        return "IDLE";
+    }
+  };
+
+  const getStatusColor = () => {
+    if (handshakeStatus.fakeAgentDetected) {
+      return "text-red-600";
+    }
+    switch (handshakeStatus.status) {
+      case "verified":
+        return "text-green-600";
+      case "failed":
+        return "text-red-600";
+      case "started":
+      case "responded":
+        return "text-blue-600";
+      default:
+        return "text-gray-600";
     }
   };
 
@@ -330,8 +364,8 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
           {getStatusIcon()}
         </div>
 
-        <div className={`text-sm ${getStatusColor()} mb-3`}>
-          Status: {handshakeStatus.status.toUpperCase()}
+        <div className={`text-sm ${getStatusColor()} mb-3 font-medium`}>
+          Status: {getStatusText()}
         </div>
 
         {handshakeStatus.handshake_id && (
@@ -355,24 +389,48 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
           </div>
         )}
 
-        <div className="flex gap-2">
-          <button
-            onClick={startHandshake}
-            disabled={isLoading || handshakeStatus.status === "verified"}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Play className="w-4 h-4" />
-            Start Verify (Agent A)
-          </button>
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-2">
+            <button
+              onClick={startHandshake}
+              disabled={isLoading || handshakeStatus.status === "verified"}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Play className="w-4 h-4" />
+              Start Verify (Agent A)
+            </button>
 
-          <button
-            onClick={simulateFakeAgent}
-            disabled={isLoading}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Zap className="w-4 h-4" />
-            Simulate Fake Agent
-          </button>
+            <button
+              onClick={simulateFakeAgent}
+              disabled={isLoading}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Zap className="w-4 h-4" />
+              Simulate Fake Agent
+            </button>
+          </div>
+          
+          {handshakeStatus.fakeAgentDetected !== undefined && (
+            <div className={`p-3 rounded-md ${
+              handshakeStatus.fakeAgentDetected 
+                ? 'bg-green-100 text-green-800 border border-green-200' 
+                : 'bg-red-100 text-red-800 border border-red-200'
+            }`}>
+              <div className="flex items-center gap-2">
+                {handshakeStatus.fakeAgentDetected ? (
+                  <>
+                    <ShieldCheck className="w-5 h-5 text-green-600" />
+                    <span>Security Alert: Fake agent detected and blocked!</span>
+                  </>
+                ) : (
+                  <>
+                    <AlertTriangle className="w-5 h-5 text-red-600" />
+                    <span>Security Warning: Fake agent was not detected!</span>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

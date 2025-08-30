@@ -118,7 +118,8 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
           3
         )}`;
       case "fake_agent_detected":
-        return `🚨 Fake agent ${data.agent_id} detected and blocked`;
+        return `🚨 Fake agent ${data.agent_id || 'unknown'} detected and blocked! ` +
+               `| Handshake ID: ${data.handshake_id?.substring(0, 8) || 'N/A'}`;
       case "secure_message":
         return `Secure message: ${data.sender_id} → ${data.receiver_id} (${data.message_length} chars)`;
       case "chat_message":
@@ -128,9 +129,21 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
     }
   };
 
-  const clearAllLogs = () => {
-    setSystemLogs([]);
-    onClearLogs();
+  const clearAllLogs = async () => {
+    try {
+      // Clear backend logs
+      await axios.delete("http://localhost:8000/clear-logs");
+      // Clear frontend logs
+      setSystemLogs([]);
+      onClearLogs();
+    } catch (error) {
+      console.error("Failed to clear logs:", error);
+    }
+  };
+
+  const handleLogClick = (log: LogEntry) => {
+    // You can add more detailed view or actions here
+    console.log("Log details:", log);
   };
 
   return (
@@ -165,9 +178,10 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
         {systemLogs.map((log, index) => (
           <div
             key={`system-${log.id || index}`}
-            className={`border-l-4 p-3 rounded-r mb-2 ${getEventColor(
+            className={`border-l-4 p-3 rounded-r mb-2 cursor-pointer hover:bg-gray-50 transition-colors ${getEventColor(
               log.event_type
             )}`}
+            onClick={() => handleLogClick(log)}
           >
             <div className="flex items-start gap-2">
               {getEventIcon(log.event_type)}
