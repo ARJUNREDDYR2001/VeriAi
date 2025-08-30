@@ -1,0 +1,72 @@
+{
+  "8c77e01374bca13fdbbd33be491f5176": {
+    "agent_id": "agent_a",
+    "content": "Hello! How can I assist you today?",
+    "timestamp": 1756542744.5047412,
+    "tokens_used": 56,
+    "from_cache": false
+  },
+  "e6549d937b6071670286b4dd08376641": {
+    "agent_id": "agent_a",
+    "content": "As of October 2023, the Prime Minister of India is Narendra Modi.",
+    "timestamp": 1756542762.943949,
+    "tokens_used": 86,
+    "from_cache": false
+  },
+  "99c68a27acf3268dbb8549d67885e128": {
+    "agent_id": "agent_b",
+    "content": "Great! I'm ready to proceed. What would you like to do next?",
+    "timestamp": 1756543888.8145962,
+    "tokens_used": 71,
+    "from_cache": false
+  },
+  "4c4ebae137388e6de53d39eaf83eea4a": {
+    "agent_id": "agent_b",
+    "content": "Sounds good! Please initiate the handshake.",
+    "timestamp": 1756543944.1355672,
+    "tokens_used": 93,
+    "from_cache": false
+  },
+  "dc33e3a04d655d4cf803553d4fcdb7eb": {
+    "agent_id": "fake_agent_f",
+    "content": "Hello! How can I assist you today?",
+    "timestamp": 1756545425.306207,
+    "tokens_used": 55,
+    "from_cache": true
+  },
+  "a41aa2ecb10fdebc3a013eb2adfeccba": {
+    "agent_id": "fake_agent_f",
+    "content": "HMAC stands for Hash-based Message Authentication Code. It's a way to ensure data integrity and authenticity by combining a cryptographic hash function with a secret key. It\u2019s commonly used in various security protocols. Why do you need to know about it?",
+    "timestamp": 1756546363.1313841,
+    "tokens_used": 99,
+    "from_cache": false
+  },
+  "02edaebb127eb5bf95abcc265100ab44": {
+    "agent_id": "agent_a",
+    "content": "Hello! How can I assist you today?",
+    "timestamp": 1756546538.1884632,
+    "tokens_used": 56,
+    "from_cache": false
+  },
+  "d12c7a260751a650aaed7fe4f1f281bf": {
+    "agent_id": "agent_a",
+    "content": "Great! Please provide your identity credentials for verification.",
+    "timestamp": 1756546543.834023,
+    "tokens_used": 82,
+    "from_cache": false
+  },
+  "98ce720acdcaee48ba570c4cf4a05d3b": {
+    "agent_id": "agent_a",
+    "content": "Thank you, Arjun. Can you please provide any additional verification details?",
+    "timestamp": 1756546552.143605,
+    "tokens_used": 107,
+    "from_cache": false
+  },
+  "00555ba2613d919a2ea945973428df1d": {
+    "agent_id": "agent_a",
+    "content": "Please share a unique identifier, like a code or password, associated with your identity.",
+    "timestamp": 1756546568.381898,
+    "tokens_used": 129,
+    "from_cache": false
+  }
+}
