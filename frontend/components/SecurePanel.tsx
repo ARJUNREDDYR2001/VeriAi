@@ -397,7 +397,7 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
               className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Play className="w-4 h-4" />
-              Start Verify (Agent A)
+              Start Verify (Agent A -&gt; Agent b)
             </button>
 
             <button
@@ -406,7 +406,7 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
               className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Zap className="w-4 h-4" />
-              Simulate Fake Agent
+              Start Verify (Agent A -&gt; Agent F)
             </button>
           </div>
           
