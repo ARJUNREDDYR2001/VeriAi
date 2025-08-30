@@ -252,7 +252,11 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
 
   const simulateFakeAgent = async () => {
     setIsLoading(true);
-    setHandshakeStatus(prev => ({ ...prev, fakeAgentDetected: undefined }));
+    // Reset to initial state before starting fake agent simulation
+    setHandshakeStatus({
+      status: "idle",
+      fakeAgentDetected: undefined
+    });
     onLog("🎭 Simulating fake agent attack...");
 
     try {
@@ -260,10 +264,18 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
 
       if (response.data.detected) {
         onLog("🚨 Fake agent detected and blocked!");
-        setHandshakeStatus(prev => ({ ...prev, fakeAgentDetected: true }));
+        // Set status to failed when fake agent is detected
+        setHandshakeStatus({
+          status: "failed",
+          fakeAgentDetected: true,
+          handshake_id: response.data.handshake_id
+        });
       } else {
         onLog("⚠️ Fake agent not detected - security breach!");
-        setHandshakeStatus(prev => ({ ...prev, fakeAgentDetected: false }));
+        setHandshakeStatus({
+          status: "failed",
+          fakeAgentDetected: false
+        });
       }
     } catch (error: any) {
       onLog(
@@ -271,27 +283,19 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
           error.response?.data?.detail || error.message
         }`
       );
-      setHandshakeStatus(prev => ({ ...prev, fakeAgentDetected: false }));
+      setHandshakeStatus({
+        status: "failed",
+        fakeAgentDetected: false
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const getStatusColor = () => {
-    switch (handshakeStatus.status) {
-      case "verified":
-        return "text-green-600";
-      case "failed":
-        return "text-red-600";
-      case "started":
-      case "responded":
-        return "text-blue-600";
-      default:
-        return "text-gray-600";
-    }
-  };
-
   const getStatusIcon = () => {
+    if (handshakeStatus.fakeAgentDetected) {
+      return <AlertTriangle className="w-5 h-5 text-red-600" />;
+    }
     switch (handshakeStatus.status) {
       case "verified":
         return <CheckCircle className="w-5 h-5 text-green-600" />;
@@ -302,6 +306,41 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
         return <Shield className="w-5 h-5 text-blue-600 animate-pulse" />;
       default:
         return <Shield className="w-5 h-5 text-gray-600" />;
+    }
+  };
+
+  const getStatusText = () => {
+    if (handshakeStatus.fakeAgentDetected) {
+      return "SECURITY ALERT: FAKE AGENT DETECTED";
+    }
+    switch (handshakeStatus.status) {
+      case "verified":
+        return "VERIFIED";
+      case "failed":
+        return "HANDSHAKE FAILED";
+      case "started":
+        return "HANDSHAKE STARTED";
+      case "responded":
+        return "RESPONSE RECEIVED";
+      default:
+        return "IDLE";
+    }
+  };
+
+  const getStatusColor = () => {
+    if (handshakeStatus.fakeAgentDetected) {
+      return "text-red-600";
+    }
+    switch (handshakeStatus.status) {
+      case "verified":
+        return "text-green-600";
+      case "failed":
+        return "text-red-600";
+      case "started":
+      case "responded":
+        return "text-blue-600";
+      default:
+        return "text-gray-600";
     }
   };
 
@@ -325,8 +364,8 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
           {getStatusIcon()}
         </div>
 
-        <div className={`text-sm ${getStatusColor()} mb-3`}>
-          Status: {handshakeStatus.status.toUpperCase()}
+        <div className={`text-sm ${getStatusColor()} mb-3 font-medium`}>
+          Status: {getStatusText()}
         </div>
 
         {handshakeStatus.handshake_id && (

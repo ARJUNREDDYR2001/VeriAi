@@ -38,20 +38,26 @@ interface LogPanelProps {
 
 export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
   const [systemLogs, setSystemLogs] = useState<LogEntry[]>([]);
+  const [isAutoRefresh, setIsAutoRefresh] = useState(true);
 
   useEffect(() => {
-    const fetchLogs = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/logs");
-        setSystemLogs(response.data.logs || []);
-      } catch (error) {
-        console.error("Failed to fetch logs:", error);
-      }
+    let interval: NodeJS.Timeout;
+
+    if (isAutoRefresh) {
+      interval = setInterval(async () => {
+        try {
+          const response = await axios.get("http://localhost:8000/logs");
+          setSystemLogs(response.data.logs || []);
+        } catch (error) {
+          console.error("Failed to fetch logs:", error);
+        }
+      }, 2000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
     };
-    
-    // Fetch logs once when component mounts
-    fetchLogs();
-  }, []);
+  }, [isAutoRefresh]);
 
   const getEventIcon = (eventType: string) => {
     switch (eventType) {
@@ -112,7 +118,8 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
           3
         )}`;
       case "fake_agent_detected":
-        return `🚨 Fake agent ${data.agent_id} detected and blocked`;
+        return `🚨 Fake agent ${data.agent_id || 'unknown'} detected and blocked! ` +
+               `| Handshake ID: ${data.handshake_id?.substring(0, 8) || 'N/A'}`;
       case "secure_message":
         return `Secure message: ${data.sender_id} → ${data.receiver_id} (${data.message_length} chars)`;
       case "chat_message":
@@ -122,9 +129,21 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
     }
   };
 
-  const clearAllLogs = () => {
-    setSystemLogs([]);
-    onClearLogs();
+  const clearAllLogs = async () => {
+    try {
+      // Clear backend logs
+      await axios.delete("http://localhost:8000/clear-logs");
+      // Clear frontend logs
+      setSystemLogs([]);
+      onClearLogs();
+    } catch (error) {
+      console.error("Failed to clear logs:", error);
+    }
+  };
+
+  const handleLogClick = (log: LogEntry) => {
+    // You can add more detailed view or actions here
+    console.log("Log details:", log);
   };
 
   return (
@@ -135,11 +154,21 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
           <h2 className="text-lg font-semibold">System Logs</h2>
         </div>
         <div className="flex items-center gap-2">
+          <label className="flex items-center gap-1 text-sm">
+            <input
+              type="checkbox"
+              checked={isAutoRefresh}
+              onChange={(e) => setIsAutoRefresh(e.target.checked)}
+              className="rounded"
+              aria-label="Auto-refresh logs"
+            />
+            <span className="ml-1">Auto-refresh</span>
+          </label>
           <button
             onClick={clearAllLogs}
             className="text-sm text-gray-500 hover:text-gray-700 px-2 py-1 rounded"
           >
-            Clear Logs
+            Clear
           </button>
         </div>
       </div>
@@ -149,9 +178,10 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
         {systemLogs.map((log, index) => (
           <div
             key={`system-${log.id || index}`}
-            className={`border-l-4 p-3 rounded-r mb-2 ${getEventColor(
+            className={`border-l-4 p-3 rounded-r mb-2 cursor-pointer hover:bg-gray-50 transition-colors ${getEventColor(
               log.event_type
             )}`}
+            onClick={() => handleLogClick(log)}
           >
             <div className="flex items-start gap-2">
               {getEventIcon(log.event_type)}

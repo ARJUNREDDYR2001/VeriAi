@@ -350,10 +350,17 @@ async def simulate_fake_agent():
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+@app.delete("/clear-logs")
+async def clear_logs():
+    """Clear all system logs"""
+    global logs
+    logs.clear()
+    return {"status": "success", "message": "Logs cleared"}
+
 @app.get("/logs")
 async def get_logs():
     """Get recent system logs"""
-    return {"logs": logs[-50:]}  # Return last 50 logs
+    return {"logs": logs[-100:]}  # Return last 100 logs
 
 @app.get("/status")
 async def get_status():
