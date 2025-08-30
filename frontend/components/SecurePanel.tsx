@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Shield,
   Lock,
@@ -10,297 +10,248 @@ import {
   Play,
   Zap,
   Eye,
-  EyeOff,
   ShieldCheck,
   AlertTriangle,
+  MessageCircle,
 } from "lucide-react";
 import axios from "axios";
 
 interface HandshakeStatus {
+  status:
+    | "idle"
+    | "started"
+    | "responded"
+    | "verified"
+    | "failed"
+    | "collaborating";
   handshake_id?: string;
-  status: "idle" | "started" | "responded" | "verified" | "failed";
   session_token?: string;
-  anomaly_score?: number;
-  nonce?: string;
   fakeAgentDetected?: boolean;
+}
+
+interface ConversationMessage {
+  sender: string;
+  message: string;
+  status?: string;
+}
+
+interface Collaboration {
+  status: string;
+  conversation_id: string;
+  conversation: ConversationMessage[];
+  session_token: string;
+  handshake_id: string;
+  ai_generated: boolean;
+}
+
+interface CostInfo {
+  total_tokens: number;
+  total_requests: number;
+  estimated_cost: string;
+  conversations_generated: number;
+  remaining_budget: string;
+}
+
+interface LogEntry {
+  timestamp: number;
+  message: string;
+}
+
+interface ChatMessage {
+  sender: string;
+  message: string;
 }
 
 interface SecurePanelProps {
   onLog: (message: string) => void;
 }
 
-export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
+export default function SecurePanel({ onLog }: SecurePanelProps) {
   const [handshakeStatus, setHandshakeStatus] = useState<HandshakeStatus>({
     status: "idle",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [mlScore, setMlScore] = useState<number | null>(null);
   const [secureMessage, setSecureMessage] = useState("");
   const [encryptedMessage, setEncryptedMessage] = useState("");
   const [showDecrypted, setShowDecrypted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [mlScore, setMlScore] = useState<number | null>(null);
+  const [collaboration, setCollaboration] = useState<Collaboration | null>(
+    null
+  );
+  const [conversationMessages, setConversationMessages] = useState<
+    ConversationMessage[]
+  >([]);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [isPlayingConversation, setIsPlayingConversation] = useState(false);
+  const [costInfo, setCostInfo] = useState<CostInfo | null>(null);
+  const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [chatMessage, setChatMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
 
-  const startHandshake = async () => {
+  // Add log function to add logs to the panel
+  const addLogEntry = (message: string) => {
+    const logEntry: LogEntry = {
+      timestamp: Date.now(),
+      message: message,
+    };
+    setLogs((prev) => [...prev, logEntry]);
+    onLog(message); // Also call the parent onLog
+  };
+
+  // Fetch cost info periodically
+  useEffect(() => {
+    const fetchCostInfo = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/status");
+        setCostInfo(response.data.openai_usage);
+      } catch (error) {
+        console.error("Failed to fetch cost info:", error);
+      }
+    };
+
+    fetchCostInfo();
+    const interval = setInterval(fetchCostInfo, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const startAgentCollaboration = async () => {
     setIsLoading(true);
-    onLog("🤝 Starting handshake protocol...");
+    setHandshakeStatus({ status: "idle" });
+    setCollaboration(null);
+    setConversationMessages([]);
+    setCurrentMessageIndex(0);
+    addLogEntry("🤖 Starting Agent A → Agent B collaboration...");
 
     try {
-      // Register Agent A if not exists
-      await axios
-        .post("http://localhost:8000/register_agent", {
-          agent_id: "agent_a",
-          agent_type: "genuine",
-        })
-        .catch(() => {}); // Ignore if already registered
-
-      // Register Agent B if not exists
-      await axios
-        .post("http://localhost:8000/register_agent", {
-          agent_id: "agent_b",
-          agent_type: "genuine",
-        })
-        .catch(() => {}); // Ignore if already registered
-
-      // Start handshake
       const response = await axios.post(
-        "http://localhost:8000/handshake/start",
-        {
-          requester_id: "agent_a",
-          responder_id: "agent_b",
-        }
+        "http://localhost:8000/start_agent_collaboration"
       );
 
-      const handshakeData = response.data;
-      setHandshakeStatus({
-        status: "started",
-        handshake_id: handshakeData.handshake_id,
-        nonce: handshakeData.nonce,
-      });
+      if (response.data.status === "collaboration_started") {
+        setCollaboration(response.data);
+        setHandshakeStatus({
+          status: "collaborating",
+          handshake_id: response.data.handshake_id,
+          session_token: response.data.session_token,
+        });
 
-      onLog(`✅ Handshake started: ${handshakeData.handshake_id}`);
-      onLog(`🎲 Nonce challenge: ${handshakeData.nonce}`);
+        addLogEntry(
+          "✅ Handshake successful! Starting secure collaboration..."
+        );
 
-      // Simulate Agent B response after a delay
-      setTimeout(async () => {
-        await simulateAgentBResponse(handshakeData.handshake_id);
-      }, 1500);
-    } catch (error: any) {
-      onLog(
-        `❌ Handshake failed: ${error.response?.data?.detail || error.message}`
-      );
+        // Start playing the conversation
+        playConversation(response.data.conversation);
+      } else {
+        addLogEntry("❌ Collaboration failed to start");
+        setHandshakeStatus({ status: "failed" });
+      }
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      addLogEntry(`❌ Collaboration error: ${errorMessage}`);
       setHandshakeStatus({ status: "failed" });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const simulateAgentBResponse = async (handshakeId: string) => {
-    onLog("🤖 Agent B generating signature...");
-
-    try {
-      // Use backend endpoint to simulate Agent B with correct signature
-      const response = await axios.post(
-        `http://localhost:8000/simulate_agent_b_response?handshake_id=${handshakeId}`
-      );
-
-      if (response.data.valid) {
-        setHandshakeStatus((prev) => ({ ...prev, status: "responded" }));
-        onLog("✅ Agent B signature verified");
-
-        // Auto-verify after short delay
-        setTimeout(
-          () => verifyHandshake(handshakeId, response.data.signature),
-          1000
-        );
-      } else {
-        onLog("❌ Agent B signature invalid");
-        setHandshakeStatus({ status: "failed" });
-      }
-    } catch (error: any) {
-      onLog(
-        `❌ Agent B response failed: ${
-          error.response?.data?.detail || error.message
-        }`
-      );
-      setHandshakeStatus({ status: "failed" });
-    }
-  };
-
-  const generateHMACSignature = async (nonce: string): Promise<string> => {
-    // Simulate HMAC generation (in real app, Agent B would do this)
-    const encoder = new TextEncoder();
-    const data = encoder.encode(nonce);
-    const key = encoder.encode("agent_b_secret_key"); // Simulated secret
-
-    const cryptoKey = await crypto.subtle.importKey(
-      "raw",
-      key,
-      { name: "HMAC", hash: "SHA-256" },
-      false,
-      ["sign"]
-    );
-
-    const signature = await crypto.subtle.sign("HMAC", cryptoKey, data);
-    return Array.from(new Uint8Array(signature))
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-  };
-
-  const verifyHandshake = async (handshakeId: string, signature: string) => {
-    onLog("🔍 Verifying handshake...");
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/handshake/verify",
-        {
-          handshake_id: handshakeId,
-          signature: signature,
-        }
-      );
-
-      if (response.data.status === "verified") {
-        setHandshakeStatus({
-          status: "verified",
-          handshake_id: handshakeId,
-          session_token: response.data.session_token,
-          anomaly_score: response.data.anomaly_score,
-        });
-        setMlScore(response.data.anomaly_score);
-
-        onLog("🎉 Handshake verified successfully!");
-        onLog(
-          `🔑 Session token issued: ${response.data.session_token.substring(
-            0,
-            16
-          )}...`
-        );
-        onLog(`🤖 ML Anomaly Score: ${response.data.anomaly_score.toFixed(3)}`);
-      } else {
-        setHandshakeStatus({ status: "failed" });
-        onLog("❌ Handshake verification failed");
-      }
-    } catch (error: any) {
-      onLog(
-        `❌ Verification failed: ${
-          error.response?.data?.detail || error.message
-        }`
-      );
-      setHandshakeStatus({ status: "failed" });
-    }
-  };
-
-  const sendSecureMessage = async () => {
-    if (!secureMessage.trim() || !handshakeStatus.session_token) return;
-
-    onLog("📨 Sending secure message...");
-
-    try {
-      // Encrypt message (simple XOR for demo)
-      const encrypted = encryptMessage(
-        secureMessage,
-        handshakeStatus.session_token
-      );
-      setEncryptedMessage(encrypted);
-
-      const response = await axios.post(
-        "http://localhost:8000/secure_message",
-        {
-          session_token: handshakeStatus.session_token,
-          encrypted_message: encrypted,
-          sender_id: "agent_a",
-          receiver_id: "agent_b",
-        }
-      );
-
-      onLog(`✅ Secure message delivered: ${response.data.message_id}`);
-      onLog(`🔒 Encrypted: ${encrypted.substring(0, 32)}...`);
-    } catch (error: any) {
-      onLog(
-        `❌ Secure message failed: ${
-          error.response?.data?.detail || error.message
-        }`
-      );
-    }
-  };
-
-  const encryptMessage = (message: string, sessionToken: string): string => {
-    // Simple XOR encryption for demo
-    const keyBytes = new TextEncoder().encode(
-      sessionToken.substring(0, 32).padEnd(32, "0")
-    );
-    const messageBytes = new TextEncoder().encode(message);
-
-    const encrypted = new Uint8Array(messageBytes.length);
-    for (let i = 0; i < messageBytes.length; i++) {
-      encrypted[i] = messageBytes[i] ^ keyBytes[i % keyBytes.length];
-    }
-
-    return btoa(String.fromCharCode(...encrypted));
-  };
-
-  const decryptMessage = (
-    encryptedMessage: string,
-    sessionToken: string
-  ): string => {
-    try {
-      const keyBytes = new TextEncoder().encode(
-        sessionToken.substring(0, 32).padEnd(32, "0")
-      );
-      const encryptedBytes = new Uint8Array(
-        atob(encryptedMessage)
-          .split("")
-          .map((c) => c.charCodeAt(0))
-      );
-
-      const decrypted = new Uint8Array(encryptedBytes.length);
-      for (let i = 0; i < encryptedBytes.length; i++) {
-        decrypted[i] = encryptedBytes[i] ^ keyBytes[i % keyBytes.length];
-      }
-
-      return new TextDecoder().decode(decrypted);
-    } catch {
-      return "[Decryption failed]";
-    }
-  };
-
-  const simulateFakeAgent = async () => {
+  const startFakeAgentAttack = async () => {
     setIsLoading(true);
-    // Reset to initial state before starting fake agent simulation
-    setHandshakeStatus({
-      status: "idle",
-      fakeAgentDetected: undefined,
-    });
-    onLog("🎭 Simulating fake agent attack...");
+    setHandshakeStatus({ status: "idle" });
+    setCollaboration(null);
+    setConversationMessages([]);
+    setCurrentMessageIndex(0);
+    addLogEntry("🚨 Fake Agent F attempting to infiltrate...");
 
     try {
-      const response = await axios.post("http://localhost:8000/simulate_fake");
+      const response = await axios.post(
+        "http://localhost:8000/start_fake_attack_demo"
+      );
 
       if (response.data.detected) {
-        onLog("🚨 Fake agent detected and blocked!");
-        // Set status to failed when fake agent is detected
         setHandshakeStatus({
           status: "failed",
           fakeAgentDetected: true,
           handshake_id: response.data.handshake_id,
         });
+
+        setMlScore(response.data.ml_score);
+        addLogEntry("🛡️ Fake agent detected and blocked!");
+
+        // Play the blocked conversation
+        playConversation(response.data.conversation);
       } else {
-        onLog("⚠️ Fake agent not detected - security breach!");
         setHandshakeStatus({
-          status: "failed",
+          status: "verified",
           fakeAgentDetected: false,
         });
+        addLogEntry("⚠️ Warning: Fake agent was not detected!");
       }
-    } catch (error: any) {
-      onLog(
-        `❌ Fake agent simulation failed: ${
-          error.response?.data?.detail || error.message
-        }`
-      );
-      setHandshakeStatus({
-        status: "failed",
-        fakeAgentDetected: false,
-      });
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      addLogEntry(`❌ Attack simulation error: ${errorMessage}`);
+      setHandshakeStatus({ status: "failed" });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const playConversation = (conversation: ConversationMessage[]) => {
+    setIsPlayingConversation(true);
+    setConversationMessages([]);
+
+    const playNextMessage = (index: number) => {
+      if (index >= conversation.length) {
+        setIsPlayingConversation(false);
+        return;
+      }
+
+      const message = conversation[index];
+      setConversationMessages((prev) => [...prev, message]);
+
+      // Log the message
+      const statusIcon =
+        message.status === "blocked"
+          ? "🚫"
+          : message.sender === "system"
+          ? "🤖"
+          : "💬";
+      addLogEntry(`${statusIcon} ${message.sender}: ${message.message}`);
+
+      // Continue to next message after delay
+      setTimeout(() => playNextMessage(index + 1), 1500);
+    };
+
+    playNextMessage(0);
+  };
+
+  const sendChatMessage = async () => {
+    if (!chatMessage.trim()) return;
+
+    const userMessage = { sender: "user", message: chatMessage };
+    setChatHistory((prev) => [...prev, userMessage]);
+    setChatMessage("");
+
+    try {
+      const response = await axios.post("http://localhost:8000/chat", {
+        agent_id: "agent_a",
+        message: chatMessage,
+      });
+
+      const agentMessage = {
+        sender: "agent_a",
+        message: response.data.content,
+      };
+      setChatHistory((prev) => [...prev, agentMessage]);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      const errorResponse = {
+        sender: "system",
+        message: `Error: ${errorMessage}`,
+      };
+      setChatHistory((prev) => [...prev, errorResponse]);
     }
   };
 
@@ -311,6 +262,10 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
     switch (handshakeStatus.status) {
       case "verified":
         return <CheckCircle className="w-5 h-5 text-green-600" />;
+      case "collaborating":
+        return (
+          <MessageCircle className="w-5 h-5 text-purple-600 animate-pulse" />
+        );
       case "failed":
         return <AlertCircle className="w-5 h-5 text-red-600" />;
       case "started":
@@ -327,208 +282,247 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
     }
     switch (handshakeStatus.status) {
       case "verified":
-        return "VERIFIED";
+        return "VERIFIED & SECURE";
+      case "collaborating":
+        return "AGENTS COLLABORATING";
       case "failed":
-        return "HANDSHAKE FAILED";
+        return "VERIFICATION FAILED";
       case "started":
-        return "HANDSHAKE STARTED";
+        return "HANDSHAKE IN PROGRESS";
       case "responded":
-        return "RESPONSE RECEIVED";
+        return "SIGNATURE RECEIVED";
       default:
-        return "IDLE";
+        return "READY FOR VERIFICATION";
     }
-  };
-
-  const getStatusColor = () => {
-    if (handshakeStatus.fakeAgentDetected) {
-      return "text-red-600";
-    }
-    switch (handshakeStatus.status) {
-      case "verified":
-        return "text-green-600";
-      case "failed":
-        return "text-red-600";
-      case "started":
-      case "responded":
-        return "text-blue-600";
-      default:
-        return "text-gray-600";
-    }
-  };
-
-  const getMlScoreColor = (score: number) => {
-    if (score > 0.7) return "text-red-600 bg-red-100";
-    if (score > 0.4) return "text-yellow-600 bg-yellow-100";
-    return "text-green-600 bg-green-100";
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 h-full flex flex-col">
-      <div className="flex items-center gap-2 mb-6">
-        <Shield className="w-5 h-5 text-purple-600" />
-        <h2 className="text-lg font-semibold">Secure Mode & Verification</h2>
+    <div className="max-w-6xl mx-auto p-6 space-y-6">
+      {/* Header */}
+      <div className="text-center">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent mb-2">
+          VeriAI Security Protocol
+        </h1>
+        <p className="text-gray-600 text-lg">
+          AI-to-AI Identity Verification & Secure Communication
+        </p>
       </div>
 
-      {/* Handshake Status */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-medium">Handshake Protocol</h3>
-          {getStatusIcon()}
-        </div>
-
-        <div className={`text-sm ${getStatusColor()} mb-3 font-medium`}>
-          Status: {getStatusText()}
-        </div>
-
-        {handshakeStatus.handshake_id && (
-          <div className="text-xs text-gray-500 mb-2">
-            ID: {handshakeStatus.handshake_id}
+      {/* Status Bar */}
+      <div className="bg-white rounded-xl shadow-lg p-4 border border-gray-200">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {getStatusIcon()}
+            <span className="font-semibold text-lg">{getStatusText()}</span>
           </div>
-        )}
+          <div className="flex items-center gap-4 text-sm text-gray-600">
+            <span>Handshake ID: {handshakeStatus.handshake_id || "None"}</span>
+            <span>
+              Session: {handshakeStatus.session_token?.slice(0, 8) || "None"}...
+            </span>
+          </div>
+        </div>
+      </div>
 
-        {mlScore !== null && (
-          <div className="mb-3">
-            <div className="flex items-center justify-between text-sm">
-              <span>ML Anomaly Score:</span>
-              <span
-                className={`px-2 py-1 rounded text-xs font-medium ${getMlScoreColor(
-                  mlScore
-                )}`}
+      {/* Main Content Grid - Two Panels */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Panel - Handshake Protocol */}
+        <div className="lg:col-span-2 bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+          <div className="flex items-center gap-2 mb-4">
+            <Shield className="w-6 h-6 text-blue-600" />
+            <h2 className="text-xl font-semibold">Handshake Protocol</h2>
+          </div>
+
+          <div className="space-y-4">
+            {/* Demo Buttons */}
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={startAgentCollaboration}
+                disabled={isLoading || isPlayingConversation}
+                className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg hover:from-blue-700 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
               >
-                {mlScore.toFixed(3)}
-              </span>
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-col gap-3">
-          <div className="flex gap-2">
-            <button
-              onClick={startHandshake}
-              disabled={isLoading || handshakeStatus.status === "verified"}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Play className="w-4 h-4" />
-              Start Verify (Agent A -&gt; Agent b)
-            </button>
-
-            <button
-              onClick={simulateFakeAgent}
-              disabled={isLoading}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Zap className="w-4 h-4" />
-              Start Verify (Agent A -&gt; Agent F)
-            </button>
-          </div>
-
-          {handshakeStatus.fakeAgentDetected !== undefined && (
-            <div
-              className={`p-3 rounded-md ${
-                handshakeStatus.fakeAgentDetected
-                  ? "bg-green-100 text-green-800 border border-green-200"
-                  : "bg-red-100 text-red-800 border border-red-200"
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                {handshakeStatus.fakeAgentDetected ? (
+                {isLoading ? (
                   <>
-                    <ShieldCheck className="w-5 h-5 text-green-600" />
-                    <span>
-                      Security Alert: Fake agent detected and blocked!
-                    </span>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                    Processing...
                   </>
                 ) : (
                   <>
-                    <AlertTriangle className="w-5 h-5 text-red-600" />
-                    <span>Security Warning: Fake agent was not detected!</span>
+                    <Play className="w-4 h-4" />
+                    🤖 Demo: Agent A ↔ Agent B Collaboration
                   </>
                 )}
+              </button>
+
+              <button
+                onClick={startFakeAgentAttack}
+                disabled={isLoading || isPlayingConversation}
+                className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-lg hover:from-red-700 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              >
+                {isLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <AlertTriangle className="w-4 h-4" />
+                    🚨 Demo: Fake Agent F Attack
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Handshake Steps */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <span className="text-blue-600 font-semibold text-sm">1</span>
+                </div>
+                <div>
+                  <div className="font-medium">Challenge Generation</div>
+                  <div className="text-sm text-gray-600">
+                    Agent A generates cryptographic nonce
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <span className="text-blue-600 font-semibold text-sm">2</span>
+                </div>
+                <div>
+                  <div className="font-medium">HMAC Signature</div>
+                  <div className="text-sm text-gray-600">
+                    Agent B signs with HMAC-SHA256
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <span className="text-blue-600 font-semibold text-sm">3</span>
+                </div>
+                <div>
+                  <div className="font-medium">ML Verification</div>
+                  <div className="text-sm text-gray-600">
+                    Behavioral analysis for anomaly detection
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                </div>
+                <div>
+                  <div className="font-medium">Secure Session</div>
+                  <div className="text-sm text-gray-600">
+                    Encrypted communication established
+                  </div>
+                </div>
               </div>
             </div>
-          )}
-        </div>
-      </div>
-
-      {/* Secure Messaging */}
-      <div className="flex-1 flex flex-col">
-        <div className="flex items-center gap-2 mb-3">
-          <Lock className="w-4 h-4 text-indigo-600" />
-          <h3 className="font-medium">Secure Messaging</h3>
+          </div>
         </div>
 
-        {handshakeStatus.status === "verified" ? (
-          <div className="flex-1 flex flex-col">
-            <div className="mb-3">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Message to encrypt:
-              </label>
-              <textarea
-                value={secureMessage}
-                onChange={(e) => setSecureMessage(e.target.value)}
-                placeholder="Enter message to send securely..."
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                rows={3}
-              />
+        {/* Right Panel - Agent Collaboration */}
+        {collaboration && (
+          <div className="lg:col-span-1 bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+            <div className="flex items-center gap-2 mb-4">
+              <MessageCircle className="w-6 h-6 text-purple-600" />
+              <h2 className="text-xl font-semibold">
+                Agent Collaboration (
+                {collaboration.ai_generated ? "AI-Generated" : "Simulated"})
+              </h2>
+              <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">
+                Live Conversation
+              </span>
             </div>
 
-            <button
-              onClick={sendSecureMessage}
-              disabled={!secureMessage.trim()}
-              className="mb-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Send Secure Message
-            </button>
-
-            {encryptedMessage && (
-              <div className="flex-1 bg-gray-50 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">
-                    Encrypted Message:
-                  </span>
-                  <button
-                    onClick={() => setShowDecrypted(!showDecrypted)}
-                    className="flex items-center gap-1 text-sm text-indigo-600 hover:text-indigo-700"
+            <div className="space-y-3 max-h-96 overflow-y-auto">
+              {conversationMessages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex ${
+                    message.sender === "agent_a"
+                      ? "justify-start"
+                      : "justify-end"
+                  }`}
+                >
+                  <div
+                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                      message.sender === "agent_a"
+                        ? "bg-blue-100 text-blue-900"
+                        : message.sender === "agent_b"
+                        ? "bg-green-100 text-green-900"
+                        : message.status === "blocked"
+                        ? "bg-red-100 text-red-900 border border-red-300"
+                        : "bg-gray-100 text-gray-900"
+                    }`}
                   >
-                    {showDecrypted ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
-                    {showDecrypted ? "Hide" : "Show"} Decrypted
-                  </button>
-                </div>
-
-                <div className="bg-white p-3 rounded border font-mono text-sm break-all">
-                  {encryptedMessage}
-                </div>
-
-                {showDecrypted && handshakeStatus.session_token && (
-                  <div className="mt-3">
-                    <span className="text-sm font-medium text-gray-700">
-                      Decrypted:
-                    </span>
-                    <div className="bg-green-50 p-3 rounded border border-green-200 mt-1">
-                      {decryptMessage(
-                        encryptedMessage,
-                        handshakeStatus.session_token
-                      )}
+                    <div className="font-semibold text-xs mb-1">
+                      {message.sender === "agent_a"
+                        ? "🤖 Agent A"
+                        : message.sender === "agent_b"
+                        ? "🤖 Agent B"
+                        : message.sender === "fake_agent_f"
+                        ? "🚨 Fake Agent F"
+                        : "🛡️ System"}
                     </div>
+                    <div className="text-sm">{message.message}</div>
                   </div>
-                )}
+                </div>
+              ))}
+            </div>
+
+            {isPlayingConversation && (
+              <div className="mt-4 flex items-center justify-center gap-2 text-purple-600">
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-purple-600 border-t-transparent"></div>
+                <span className="text-sm">Agents are communicating...</span>
               </div>
             )}
           </div>
-        ) : (
-          <div className="flex-1 flex items-center justify-center text-gray-500">
-            <div className="text-center">
-              <Unlock className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p>Complete handshake verification</p>
-              <p className="text-sm">to enable secure messaging</p>
+        )}
+        {/* OpenAI Cost Tracker */}
+      </div>
+
+      {/* OpenAI Cost Tracker */}
+      {costInfo && (
+        <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl shadow-lg p-6 border border-green-200">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-green-600 font-semibold text-lg">
+              💰 OpenAI Usage Tracker
+            </span>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div className="bg-white p-3 rounded-lg">
+              <span className="text-gray-600 block">Conversations:</span>
+              <span className="font-bold text-lg text-blue-600">
+                {costInfo.conversations_generated}
+              </span>
+            </div>
+            <div className="bg-white p-3 rounded-lg">
+              <span className="text-gray-600 block">Tokens:</span>
+              <span className="font-bold text-lg text-purple-600">
+                {costInfo.total_tokens}
+              </span>
+            </div>
+            <div className="bg-white p-3 rounded-lg">
+              <span className="text-gray-600 block">Cost:</span>
+              <span className="font-bold text-lg text-green-600">
+                {costInfo.estimated_cost}
+              </span>
+            </div>
+            <div className="bg-white p-3 rounded-lg">
+              <span className="text-gray-600 block">Remaining:</span>
+              <span className="font-bold text-lg text-blue-600">
+                {costInfo.remaining_budget}
+              </span>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

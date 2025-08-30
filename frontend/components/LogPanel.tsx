@@ -147,7 +147,7 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 h-full flex flex-col overflow-hidden max-h-full">
+    <div className="bg-white rounded-lg shadow-lg p-4 h-full flex flex-col overflow-hidden" style={{ maxHeight: '500px' }}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Activity className="w-5 h-5 text-green-600" />
@@ -173,7 +173,7 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto space-y-2 min-h-0 pr-2 -mr-2 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto space-y-2 min-h-0 pr-2 -mr-2 custom-scrollbar" style={{ maxHeight: 'calc(100% - 60px)' }}>
         {/* System Events */}
         {systemLogs.map((log, index) => (
           <div
@@ -241,7 +241,7 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
       </div>
 
       {/* Stats */}
-      <div className="mt-2 pt-3 border-t border-gray-200">
+      <div className="mt-auto pt-3 border-t border-gray-200">
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
             <div className="text-lg font-semibold text-blue-600">
@@ -264,8 +264,10 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
           <div>
             <div className="text-lg font-semibold text-red-600">
               {
-                systemLogs.filter((l) => l.event_type === "fake_agent_detected")
-                  .length
+                systemLogs.filter(l => 
+                  l.event_type === "fake_agent_detected" || 
+                  (l.event_type === "handshake_response" && l.data.signature_valid === false)
+                ).length
               }
             </div>
             <div className="text-xs text-gray-500">Blocked</div>

@@ -17,10 +17,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 ">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className="bg-white shadow-sm border-b sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-3">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">VeriAI</h1>
@@ -44,21 +44,20 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 min-h-0">
-          {/* Chat Panel */}
-          <div className="lg:col-span-1">
-            <ChatPanel onLog={addLog} />
+      <main className="flex-1 w-full max-w-7xl mx-auto px-2 sm:px-4 py-4 flex flex-col">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-0">
+          {/* Secure Panel - Takes 2/3 width on large screens, full width on mobile */}
+          <div className="lg:col-span-2 flex flex-col h-full">
+            <div className="flex-1 flex flex-col bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+              <SecurePanel onLog={addLog} />
+            </div>
           </div>
 
-          {/* Secure Panel */}
-          <div className="lg:col-span-1">
-            <SecurePanel onLog={addLog} />
-          </div>
-
-          {/* Log Panel */}
-          <div className="lg:col-span-1 flex flex-col h-[600px]">
-            <LogPanel logs={logs} onClearLogs={clearLogs} />
+          {/* Log Panel - Takes 1/3 width on large screens, full width on mobile */}
+          <div className="lg:col-span-1 flex flex-col">
+            <div className="flex-1 flex flex-col bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+              <LogPanel logs={logs} onClearLogs={clearLogs} />
+            </div>
           </div>
         </div>
 
@@ -100,7 +99,7 @@ export default function Home() {
               <div className="text-4xl mb-3">🚨</div>
               <h3 className="font-bold text-lg mb-2">THE PROBLEM</h3>
               <p className="text-sm opacity-90">
-                AI agents can't verify they're talking to other AIs vs
+                AI agents can&apos;t verify they&apos;re talking to other AIs vs
                 humans/bots. This enables impersonation attacks in multi-agent
                 systems.
               </p>
@@ -138,7 +137,8 @@ export default function Home() {
                 Start Verification
               </h3>
               <p className="text-xs text-blue-700">
-                Click "Start Verify" to see cryptographic handshake in action
+                Click &quot;Start Verify&quot; to see cryptographic handshake in
+                action
               </p>
             </div>
             <div className="text-center p-4 bg-green-50 rounded-lg">
@@ -154,7 +154,7 @@ export default function Home() {
               <div className="text-2xl mb-2">3️⃣</div>
               <h3 className="font-medium text-red-900 mb-2">Simulate Attack</h3>
               <p className="text-xs text-red-700">
-                Test "Fake Agent F" to see fraud detection in action
+                Test &quot;Fake Agent F&quot; to see fraud detection in action
               </p>
             </div>
             <div className="text-center p-4 bg-purple-50 rounded-lg">
