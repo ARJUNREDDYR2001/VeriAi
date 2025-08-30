@@ -1,0 +1,1424 @@
+{
+  "thresholds": {
+    "signature_verification": 1,
+    "response_latency_ms": [
+      97.35743255655713,
+      329.59808763630735
+    ],
+    "message_entropy": 2.988979433869688,
+    "handshake_duration": [
+      127.00589358950475,
+      458.1032699088406
+    ]
+  },
+  "training_data": [
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 152.7454455512281,
+      "message_entropy": 4.005829496346107,
+      "handshake_duration": 206.71993177197655,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 203.0221269657486,
+      "message_entropy": 4.192303868827973,
+      "handshake_duration": 310.226568819775,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 172.9329956388092,
+      "message_entropy": 4.405608141560101,
+      "handshake_duration": 127.0786343533504,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 181.04795474695686,
+      "message_entropy": 3.070206130157575,
+      "handshake_duration": 230.69061240450597,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 140.73653189489613,
+      "message_entropy": 3.5052850323603417,
+      "handshake_duration": 82.42028029064241,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 198.32780194859706,
+      "message_entropy": 3.5926814069416753,
+      "handshake_duration": 327.4659819557227,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 119.7890938394935,
+      "message_entropy": 3.9240511537718428,
+      "handshake_duration": 314.1225890270076,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 278.8845763438519,
+      "message_entropy": 4.617297170449883,
+      "handshake_duration": 229.89382916048032,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 210.46443204319465,
+      "message_entropy": 4.358443754279383,
+      "handshake_duration": 316.0418766834913,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 206.05062926677945,
+      "message_entropy": 4.162368669455059,
+      "handshake_duration": 269.9842004653617,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 197.66902534893018,
+      "message_entropy": 3.4895599118929614,
+      "handshake_duration": 294.30471750564897,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 180.741099714969,
+      "message_entropy": 3.430399733474755,
+      "handshake_duration": 287.41157841887076,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 152.631161619599,
+      "message_entropy": 4.116038690740519,
+      "handshake_duration": 386.0707978553452,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 181.95508961928093,
+      "message_entropy": 3.243708923912591,
+      "handshake_duration": 209.96550607568287,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 159.89029081015212,
+      "message_entropy": 3.434194066707147,
+      "handshake_duration": 330.6993568903709,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 181.88534098998957,
+      "message_entropy": 3.742211556287249,
+      "handshake_duration": 485.42703288250846,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 234.71165006444923,
+      "message_entropy": 3.739066857442048,
+      "handshake_duration": 260.42593483234367,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 234.26048135266853,
+      "message_entropy": 3.8871246640182973,
+      "handshake_duration": 265.930805738164,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 223.5937349746511,
+      "message_entropy": 3.613894952229675,
+      "handshake_duration": 265.5499619072793,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 150.28159746237307,
+      "message_entropy": 3.5698293882451777,
+      "handshake_duration": 153.04644381125388,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 176.17462141923224,
+      "message_entropy": 3.4950296608378983,
+      "handshake_duration": 166.74094367903635,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 202.98392716581836,
+      "message_entropy": 3.9125709554887083,
+      "handshake_duration": 264.11658657242174,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 126.23801566933426,
+      "message_entropy": 4.057794720410341,
+      "handshake_duration": 147.40823662069977,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 181.92476248161748,
+      "message_entropy": 3.201400536700386,
+      "handshake_duration": 353.7175660912721,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 219.98509756401808,
+      "message_entropy": 4.014951512893257,
+      "handshake_duration": 235.9488184455246,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 144.82101798377533,
+      "message_entropy": 2.918505025900198,
+      "handshake_duration": 293.70942664715324,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 192.39474379829264,
+      "message_entropy": 3.710685987249333,
+      "handshake_duration": 283.26196049122353,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 216.29015896001246,
+      "message_entropy": 2.9853124934552726,
+      "handshake_duration": 353.7264331154091,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 248.57234009127376,
+      "message_entropy": 4.33311805410297,
+      "handshake_duration": 200.786925063252,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 181.7582587827528,
+      "message_entropy": 3.8085761745828144,
+      "handshake_duration": 224.62744620625637,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 131.6614716326597,
+      "message_entropy": 3.7924072418659627,
+      "handshake_duration": 302.8739846308457,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 130.90413432783814,
+      "message_entropy": 3.544220910412685,
+      "handshake_duration": 275.22775363715834,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 171.0357136090739,
+      "message_entropy": 3.6815668165736084,
+      "handshake_duration": 359.25722506900615,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 216.066404334478,
+      "message_entropy": 3.8836108041001207,
+      "handshake_duration": 256.4149120413978,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 186.61335911786088,
+      "message_entropy": 3.547292096002732,
+      "handshake_duration": 199.9427936420281,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 195.05136721339537,
+      "message_entropy": 3.9405818099522194,
+      "handshake_duration": 294.76214850227404,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 234.17468900205796,
+      "message_entropy": 4.198009233306639,
+      "handshake_duration": 160.42325667327265,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 159.53040465519516,
+      "message_entropy": 3.300066787029684,
+      "handshake_duration": 206.677619797344,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 182.734667000669,
+      "message_entropy": 3.7247519160243363,
+      "handshake_duration": 180.96982252735282,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 172.10739624487846,
+      "message_entropy": 3.371927088262713,
+      "handshake_duration": 273.03796093815936,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 219.1797903522416,
+      "message_entropy": 3.8180066187020465,
+      "handshake_duration": 246.36843826359177,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 171.56128548527874,
+      "message_entropy": 3.907755182780078,
+      "handshake_duration": 171.3223522617189,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 262.9220934468151,
+      "message_entropy": 3.938502919456749,
+      "handshake_duration": 248.22084191368344,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 224.62511876643123,
+      "message_entropy": 3.9258140379091677,
+      "handshake_duration": 233.61786597840904,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 209.91076915972104,
+      "message_entropy": 3.22991951417056,
+      "handshake_duration": 246.9975396454888,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 208.37350902361584,
+      "message_entropy": 3.742876975596869,
+      "handshake_duration": 273.3440229763763,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 236.9030360093233,
+      "message_entropy": 3.6214932791280083,
+      "handshake_duration": 298.05426408730625,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 310.3111342426398,
+      "message_entropy": 3.8037475964525576,
+      "handshake_duration": 351.7760681040729,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 123.75565714898121,
+      "message_entropy": 3.4565473031687866,
+      "handshake_duration": 308.20403190696993,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 234.70233466416033,
+      "message_entropy": 3.610696712417409,
+      "handshake_duration": 265.86179137109116,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 223.8135556542283,
+      "message_entropy": 4.608679275232144,
+      "handshake_duration": 217.82295418005793,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 202.1764137562528,
+      "message_entropy": 4.454752770729484,
+      "handshake_duration": 272.7751310708724,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 141.03946374031483,
+      "message_entropy": 3.614351757336334,
+      "handshake_duration": 272.57454790230213,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 199.0006622780731,
+      "message_entropy": 3.4757415648317362,
+      "handshake_duration": 283.7338920668469,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 201.91515633928748,
+      "message_entropy": 4.177203150955902,
+      "handshake_duration": 331.55004027852874,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 179.416468106719,
+      "message_entropy": 4.2645312295262485,
+      "handshake_duration": 368.00425590616504,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 171.29592673945805,
+      "message_entropy": 4.129187289192551,
+      "handshake_duration": 196.28653917081294,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 189.1791461912877,
+      "message_entropy": 4.030841736430654,
+      "handshake_duration": 231.63841381125397,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 288.86712977135556,
+      "message_entropy": 3.8963487260499785,
+      "handshake_duration": 365.12299060395503,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 209.66053720097005,
+      "message_entropy": 3.981495483758467,
+      "handshake_duration": 222.2815924561225,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 180.33850954757025,
+      "message_entropy": 3.4751629406292612,
+      "handshake_duration": 217.7866667096181,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 149.69522327972558,
+      "message_entropy": 3.312784505759626,
+      "handshake_duration": 263.80825202072907,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 154.93300904618133,
+      "message_entropy": 3.805819300738625,
+      "handshake_duration": 256.1803450485718,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 218.39446511143234,
+      "message_entropy": 3.8496843757639887,
+      "handshake_duration": 224.65413236901432,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 179.17558847349912,
+      "message_entropy": 3.333212160849577,
+      "handshake_duration": 272.77931659031077,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 157.1620035147913,
+      "message_entropy": 4.278895891761561,
+      "handshake_duration": 273.10523444424706,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 150.36401392040165,
+      "message_entropy": 4.299019395486118,
+      "handshake_duration": 283.25433136976903,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 106.30733206070737,
+      "message_entropy": 3.425027981829592,
+      "handshake_duration": 155.34490485629783,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 276.81714198735096,
+      "message_entropy": 3.6167670933116836,
+      "handshake_duration": 274.1929229324493,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 203.81346851982846,
+      "message_entropy": 4.231543265405348,
+      "handshake_duration": 203.17347821523856,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 198.510800650213,
+      "message_entropy": 3.9418784006284904,
+      "handshake_duration": 301.39123114638176,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 148.02016403895715,
+      "message_entropy": 2.9845923184425445,
+      "handshake_duration": 271.83383338449414,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 131.30203097068488,
+      "message_entropy": 4.18986495237607,
+      "handshake_duration": 315.8485141801788,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 249.33769479748284,
+      "message_entropy": 4.509393299786595,
+      "handshake_duration": 204.47016737689256,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 208.24477530935246,
+      "message_entropy": 3.66549747150182,
+      "handshake_duration": 297.46841225111854,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 147.15417260474362,
+      "message_entropy": 4.104954691647425,
+      "handshake_duration": 263.76106356308173,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 195.1138430592527,
+      "message_entropy": 4.267842363697596,
+      "handshake_duration": 299.35289123241074,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 237.33918073648516,
+      "message_entropy": 3.642570356862531,
+      "handshake_duration": 186.10369306899582,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 206.48164372157103,
+      "message_entropy": 3.6731678531849474,
+      "handshake_duration": 227.6677272113381,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 179.7925028047458,
+      "message_entropy": 4.13352496371248,
+      "handshake_duration": 227.07488224717727,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 172.83429099970002,
+      "message_entropy": 3.3067079449395194,
+      "handshake_duration": 287.049452567541,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 151.75711148921965,
+      "message_entropy": 4.109492857979242,
+      "handshake_duration": 207.2219919634021,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 168.70969544242678,
+      "message_entropy": 4.563085815386943,
+      "handshake_duration": 194.72127698957593,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 194.10929400749941,
+      "message_entropy": 3.9836056803093873,
+      "handshake_duration": 250.6418830609727,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 214.4876060789193,
+      "message_entropy": 3.8527759084881614,
+      "handshake_duration": 249.65037540270202,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 224.7738528894692,
+      "message_entropy": 4.078244505858167,
+      "handshake_duration": 290.98254914063995,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 222.71677577410526,
+      "message_entropy": 3.7160719744043913,
+      "handshake_duration": 285.38400765592394,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 207.34062078732046,
+      "message_entropy": 3.6351490301716476,
+      "handshake_duration": 201.59778650821664,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 247.53741727255274,
+      "message_entropy": 4.258571517755165,
+      "handshake_duration": 299.8589490864829,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 168.54476390475682,
+      "message_entropy": 3.992752351036503,
+      "handshake_duration": 288.4638899333977,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 119.11347854902203,
+      "message_entropy": 3.346208821667078,
+      "handshake_duration": 307.3649734558982,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 185.66967550317648,
+      "message_entropy": 4.386641049530355,
+      "handshake_duration": 326.2871077184034,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 159.7944010021671,
+      "message_entropy": 3.5944854986890573,
+      "handshake_duration": 359.93649438223935,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 202.2540107067664,
+      "message_entropy": 3.5355852160653756,
+      "handshake_duration": 260.515406416616,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 147.02020304106054,
+      "message_entropy": 3.82761878583391,
+      "handshake_duration": 245.93594215523584,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 174.15905624410775,
+      "message_entropy": 3.9493093712776925,
+      "handshake_duration": 366.51546691931514,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 177.06789287089845,
+      "message_entropy": 4.671487823246243,
+      "handshake_duration": 329.7471990157061,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 185.06788883220645,
+      "message_entropy": 3.2613332191970184,
+      "handshake_duration": 177.5922009035927,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 156.07426756890533,
+      "message_entropy": 3.7608782181234695,
+      "handshake_duration": 113.98058854022628,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 226.44314157271947,
+      "message_entropy": 3.2255366492004307,
+      "handshake_duration": 264.03915535771324,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 124.15715380747817,
+      "message_entropy": 3.6438841629457586,
+      "handshake_duration": 261.96773670885165,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 98.483148323992,
+      "message_entropy": 2.7838076283705906,
+      "handshake_duration": 164.02182084688482,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 222.44654011086533,
+      "message_entropy": 3.189460737105424,
+      "handshake_duration": 262.3534500994644,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 154.7348824242782,
+      "message_entropy": 4.174978265674612,
+      "handshake_duration": 298.1176687052576,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 187.67122401591766,
+      "message_entropy": 3.6606799364492333,
+      "handshake_duration": 307.679260868115,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 124.19843573608762,
+      "message_entropy": 4.250550744350329,
+      "handshake_duration": 388.6538347452809,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 178.58766452969905,
+      "message_entropy": 3.7908627494994587,
+      "handshake_duration": 206.95739727708235,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 86.9842280833161,
+      "message_entropy": 4.141232998372813,
+      "handshake_duration": 300.7136228377154,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 157.95526533406468,
+      "message_entropy": 4.4794991603231615,
+      "handshake_duration": 150.54347932673014,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 190.98982955565538,
+      "message_entropy": 3.067473420865387,
+      "handshake_duration": 274.99134945909856,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 203.55653261767753,
+      "message_entropy": 3.4242455495991293,
+      "handshake_duration": 285.297962766351,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 152.41338331717887,
+      "message_entropy": 3.5833743364851904,
+      "handshake_duration": 308.97865256588636,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 134.35355366109349,
+      "message_entropy": 3.5016130973830712,
+      "handshake_duration": 217.9106019688914,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 198.60634193154993,
+      "message_entropy": 4.259653177961704,
+      "handshake_duration": 194.62530081192503,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 186.11358441191535,
+      "message_entropy": 3.702816312268794,
+      "handshake_duration": 260.3093008618253,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 218.93325515958688,
+      "message_entropy": 3.0754183647968656,
+      "handshake_duration": 143.4064325070732,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 202.50512998736644,
+      "message_entropy": 4.3393727576140915,
+      "handshake_duration": 202.6703052836216,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 205.79615930129773,
+      "message_entropy": 3.4690628835117074,
+      "handshake_duration": 255.6660856774278,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 201.7092491884109,
+      "message_entropy": 3.6112905320471804,
+      "handshake_duration": 221.2064539317316,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 113.61940030346018,
+      "message_entropy": 3.2466464393599135,
+      "handshake_duration": 255.0459773294992,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 182.2884767443534,
+      "message_entropy": 4.0902032243210416,
+      "handshake_duration": 232.0017793274169,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 117.96345402894163,
+      "message_entropy": 4.335628009469291,
+      "handshake_duration": 301.3768602876643,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 176.71539835211388,
+      "message_entropy": 4.17526433317364,
+      "handshake_duration": 288.152973160094,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 218.59642719322633,
+      "message_entropy": 3.765602155024374,
+      "handshake_duration": 371.5166437603188,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 252.4690106353563,
+      "message_entropy": 3.7561413200424303,
+      "handshake_duration": 311.49919865418025,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 122.78373490526553,
+      "message_entropy": 3.4414381424193152,
+      "handshake_duration": 229.01953626549485,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 116.68620947654742,
+      "message_entropy": 3.9740285360230136,
+      "handshake_duration": 284.9178322817052,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 179.28810480333252,
+      "message_entropy": 3.462917055014715,
+      "handshake_duration": 150.12295268774068,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 279.4370963094022,
+      "message_entropy": 3.705933466600263,
+      "handshake_duration": 300.07504040636604,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 201.59452914240777,
+      "message_entropy": 3.665579082232975,
+      "handshake_duration": 227.04252179622708,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 249.09217769425766,
+      "message_entropy": 3.960050914088847,
+      "handshake_duration": 451.38095403673395,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 299.13922592936717,
+      "message_entropy": 4.025803126349402,
+      "handshake_duration": 332.3600436865583,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 163.3516842589827,
+      "message_entropy": 3.399816704669532,
+      "handshake_duration": 309.78012040423744,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 229.95716448786789,
+      "message_entropy": 4.015899372141308,
+      "handshake_duration": 223.1437940040162,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 151.74347431971364,
+      "message_entropy": 3.808508139001875,
+      "handshake_duration": 150.82652877173564,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 196.31685718784576,
+      "message_entropy": 4.289224626470397,
+      "handshake_duration": 282.1326950405755,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 230.71376561437972,
+      "message_entropy": 4.462111688834916,
+      "handshake_duration": 136.07555587564968,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 105.81612601848252,
+      "message_entropy": 4.410039881444815,
+      "handshake_duration": 258.8312595811164,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 158.0547681992983,
+      "message_entropy": 3.667986858961585,
+      "handshake_duration": 343.5730485376528,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 118.46344596491548,
+      "message_entropy": 3.7055547322750617,
+      "handshake_duration": 238.48531635100318,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 195.21650873702598,
+      "message_entropy": 3.575209411686075,
+      "handshake_duration": 215.0797995358838,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 174.46449090389035,
+      "message_entropy": 2.935936898309877,
+      "handshake_duration": 200.39330728600603,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 154.42095533935213,
+      "message_entropy": 4.332679999303124,
+      "handshake_duration": 353.945039033934,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 181.56510056301423,
+      "message_entropy": 3.9012884483185517,
+      "handshake_duration": 343.43820608196484,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 231.3582101926008,
+      "message_entropy": 3.975991017223468,
+      "handshake_duration": 78.75640744275623,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 179.47742397190478,
+      "message_entropy": 3.9973739141754816,
+      "handshake_duration": 299.99867073262453,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 307.50171627697625,
+      "message_entropy": 3.3770245751577455,
+      "handshake_duration": 306.151036338187,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 185.6796097042377,
+      "message_entropy": 3.2863859408646903,
+      "handshake_duration": 260.1302445341293,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 326.5508230910808,
+      "message_entropy": 3.27565350451623,
+      "handshake_duration": 248.98542858805936,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 79.8450045531358,
+      "message_entropy": 3.587882791710418,
+      "handshake_duration": 226.79725331806318,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 256.0653197635008,
+      "message_entropy": 3.6507476981517017,
+      "handshake_duration": 219.33351441168728,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 246.1330526604626,
+      "message_entropy": 3.883894551917365,
+      "handshake_duration": 173.52346820205597,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 256.0644710724167,
+      "message_entropy": 4.183244380901072,
+      "handshake_duration": 164.24988461752824,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 310.3499243427963,
+      "message_entropy": 3.7447768274611994,
+      "handshake_duration": 287.58822651521683,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 219.12628353203758,
+      "message_entropy": 3.4379181975882673,
+      "handshake_duration": 370.8834907781654,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 267.51231872143944,
+      "message_entropy": 3.5491300948765376,
+      "handshake_duration": 298.47741757482163,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 139.65633267624145,
+      "message_entropy": 3.6621009725293785,
+      "handshake_duration": 207.04550246906553,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 183.87771679022381,
+      "message_entropy": 3.536947116082719,
+      "handshake_duration": 301.95917347776947,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 184.34814884232162,
+      "message_entropy": 3.4607006020404603,
+      "handshake_duration": 244.7590387457715,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 242.0658213315646,
+      "message_entropy": 3.1583238188941642,
+      "handshake_duration": 206.84386699075333,
+      "is_fraud": false
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 97.26868842471849,
+      "message_entropy": 1.2155366147289821,
+      "handshake_duration": 145.85085835098252,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 130.11224924734213,
+      "message_entropy": 1.2216960061295046,
+      "handshake_duration": 129.88350136313917,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 114.90425719561222,
+      "message_entropy": 3.6320337653660593,
+      "handshake_duration": 181.76019018417193,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 87.92613107890443,
+      "message_entropy": 2.433968550683074,
+      "handshake_duration": 206.9589159017354,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 19.412724752847872,
+      "message_entropy": 3.026749129692528,
+      "handshake_duration": 31.833006073527955,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 37.99675912914791,
+      "message_entropy": 2.9924944615524383,
+      "handshake_duration": 46.68567206566993,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 25.595761266208132,
+      "message_entropy": 3.128741066712999,
+      "handshake_duration": 45.01589271586285,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 139.01709726233753,
+      "message_entropy": 3.366399233939738,
+      "handshake_duration": 183.55733964533036,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 13.650487575504606,
+      "message_entropy": 2.4226567845149867,
+      "handshake_duration": 50.122297516528896,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 106.81963341391435,
+      "message_entropy": 1.6584622548392718,
+      "handshake_duration": 92.90634537841163,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 28.629138482526287,
+      "message_entropy": 1.7939193578038735,
+      "handshake_duration": 116.82642486367486,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 63.50732850471428,
+      "message_entropy": 2.2546405463775767,
+      "handshake_duration": 55.494856269148926,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 142.01846802560414,
+      "message_entropy": 3.1855200879633516,
+      "handshake_duration": 172.47453914954647,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 134.23581151831883,
+      "message_entropy": 2.850210650466143,
+      "handshake_duration": 171.75459299540486,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 108.76362694721807,
+      "message_entropy": 2.95191040523922,
+      "handshake_duration": 115.8673790517752,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 35.40098654566317,
+      "message_entropy": 2.606826382166982,
+      "handshake_duration": 65.21929723750587,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 42.41895883678017,
+      "message_entropy": 1.7659762096325136,
+      "handshake_duration": 114.32293905195266,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 112.01312063049164,
+      "message_entropy": 1.893930157371189,
+      "handshake_duration": 168.28860912148514,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 86.71939007520672,
+      "message_entropy": 2.2016573991532074,
+      "handshake_duration": 142.47624628382562,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 34.83334917958335,
+      "message_entropy": 2.3810697943860575,
+      "handshake_duration": 83.51261268818507,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 38.47013199701733,
+      "message_entropy": 1.8480413360053884,
+      "handshake_duration": 96.88503386921029,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 19.25792205110283,
+      "message_entropy": 2.89412629606941,
+      "handshake_duration": 90.92513331545415,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 20.4095480994063,
+      "message_entropy": 2.50446328962981,
+      "handshake_duration": 54.22667355660123,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 49.12486105974676,
+      "message_entropy": 2.159241609293453,
+      "handshake_duration": 114.8038348389451,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 93.61528460581178,
+      "message_entropy": 3.65240541545688,
+      "handshake_duration": 150.15451506004763,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 38.95724097788152,
+      "message_entropy": 2.094597207266107,
+      "handshake_duration": 33.78506717711677,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 13.93508494969571,
+      "message_entropy": 2.6830026127365985,
+      "handshake_duration": 49.37340125549049,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 129.6602993311576,
+      "message_entropy": 4.1347948243149135,
+      "handshake_duration": 144.80817258173943,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 178.9870513314057,
+      "message_entropy": 3.649100700697285,
+      "handshake_duration": 241.3029374285652,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 37.12941279825773,
+      "message_entropy": 1.725783093112128,
+      "handshake_duration": 19.9775797438339,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 76.27642902470632,
+      "message_entropy": 2.7252883558050565,
+      "handshake_duration": 185.25613253920895,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 146.83451028847608,
+      "message_entropy": 3.4252089123494804,
+      "handshake_duration": 137.11755036821586,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 11.071821193013157,
+      "message_entropy": 2.952123809392428,
+      "handshake_duration": 21.717758140910565,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 125.73189290644851,
+      "message_entropy": 1.8156779366037323,
+      "handshake_duration": 130.803928485749,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 24.84424913613735,
+      "message_entropy": 2.3433561373343017,
+      "handshake_duration": 95.87549992888354,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 25.291880015728825,
+      "message_entropy": 2.9574312520177064,
+      "handshake_duration": 42.59918856895294,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 25.06847117219351,
+      "message_entropy": 2.8791823870201045,
+      "handshake_duration": 46.85559755234938,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 141.6306348592683,
+      "message_entropy": 3.1686330318528295,
+      "handshake_duration": 138.10481484017345,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 0,
+      "response_latency_ms": 190.76387768053422,
+      "message_entropy": 2.057160656027077,
+      "handshake_duration": 148.25277502893942,
+      "is_fraud": true
+    },
+    {
+      "signature_verification": 1,
+      "response_latency_ms": 15.00281761848364,
+      "message_entropy": 2.7808562850478973,
+      "handshake_duration": 74.26472274344874,
+      "is_fraud": true
+    }
+  ],
+  "feature_names": [
+    "signature_verification",
+    "response_latency_ms",
+    "message_entropy",
+    "handshake_duration"
+  ],
+  "version": "1.0",
+  "trained_at": 1756537852.3585432
+}
