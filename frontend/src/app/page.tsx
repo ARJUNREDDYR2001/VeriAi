@@ -55,7 +55,7 @@ export default function Home() {
 
           {/* Log Panel - Takes 1/3 width on large screens, full width on mobile */}
           <div className="lg:col-span-1 flex flex-col">
-            <div className="flex-1 flex flex-col bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+            <div className="flex flex-col bg-white rounded-lg shadow overflow-hidden border border-gray-200">
               <LogPanel logs={logs} onClearLogs={clearLogs} />
             </div>
           </div>
