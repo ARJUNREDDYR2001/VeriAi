@@ -1,7 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { Shield, Lock, Unlock, AlertCircle, CheckCircle, Play, Zap, Eye, EyeOff, ShieldCheck, AlertTriangle } from "lucide-react";
+import {
+  Shield,
+  Lock,
+  Unlock,
+  AlertCircle,
+  CheckCircle,
+  Play,
+  Zap,
+  Eye,
+  EyeOff,
+  ShieldCheck,
+  AlertTriangle,
+} from "lucide-react";
 import axios from "axios";
 
 interface HandshakeStatus {
@@ -255,7 +267,7 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
     // Reset to initial state before starting fake agent simulation
     setHandshakeStatus({
       status: "idle",
-      fakeAgentDetected: undefined
+      fakeAgentDetected: undefined,
     });
     onLog("🎭 Simulating fake agent attack...");
 
@@ -268,13 +280,13 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
         setHandshakeStatus({
           status: "failed",
           fakeAgentDetected: true,
-          handshake_id: response.data.handshake_id
+          handshake_id: response.data.handshake_id,
         });
       } else {
         onLog("⚠️ Fake agent not detected - security breach!");
         setHandshakeStatus({
           status: "failed",
-          fakeAgentDetected: false
+          fakeAgentDetected: false,
         });
       }
     } catch (error: any) {
@@ -285,7 +297,7 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
       );
       setHandshakeStatus({
         status: "failed",
-        fakeAgentDetected: false
+        fakeAgentDetected: false,
       });
     } finally {
       setIsLoading(false);
@@ -409,18 +421,22 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
               Start Verify (Agent A -&gt; Agent F)
             </button>
           </div>
-          
+
           {handshakeStatus.fakeAgentDetected !== undefined && (
-            <div className={`p-3 rounded-md ${
-              handshakeStatus.fakeAgentDetected 
-                ? 'bg-green-100 text-green-800 border border-green-200' 
-                : 'bg-red-100 text-red-800 border border-red-200'
-            }`}>
+            <div
+              className={`p-3 rounded-md ${
+                handshakeStatus.fakeAgentDetected
+                  ? "bg-green-100 text-green-800 border border-green-200"
+                  : "bg-red-100 text-red-800 border border-red-200"
+              }`}
+            >
               <div className="flex items-center gap-2">
                 {handshakeStatus.fakeAgentDetected ? (
                   <>
                     <ShieldCheck className="w-5 h-5 text-green-600" />
-                    <span>Security Alert: Fake agent detected and blocked!</span>
+                    <span>
+                      Security Alert: Fake agent detected and blocked!
+                    </span>
                   </>
                 ) : (
                   <>
