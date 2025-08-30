@@ -3,7 +3,7 @@
 export default function Home() {
   return (
    <div>
-    <p>aditi</p>
+    <p>kothi</p>
    </div>
   );
 }
