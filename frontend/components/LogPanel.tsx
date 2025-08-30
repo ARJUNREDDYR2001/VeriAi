@@ -38,26 +38,20 @@ interface LogPanelProps {
 
 export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
   const [systemLogs, setSystemLogs] = useState<LogEntry[]>([]);
-  const [isAutoRefresh, setIsAutoRefresh] = useState(true);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-
-    if (isAutoRefresh) {
-      interval = setInterval(async () => {
-        try {
-          const response = await axios.get("http://localhost:8000/logs");
-          setSystemLogs(response.data.logs || []);
-        } catch (error) {
-          console.error("Failed to fetch logs:", error);
-        }
-      }, 2000);
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
+    const fetchLogs = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/logs");
+        setSystemLogs(response.data.logs || []);
+      } catch (error) {
+        console.error("Failed to fetch logs:", error);
+      }
     };
-  }, [isAutoRefresh]);
+    
+    // Fetch logs once when component mounts
+    fetchLogs();
+  }, []);
 
   const getEventIcon = (eventType: string) => {
     switch (eventType) {
@@ -141,21 +135,11 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
           <h2 className="text-lg font-semibold">System Logs</h2>
         </div>
         <div className="flex items-center gap-2">
-          <label className="flex items-center gap-1 text-sm">
-            <input
-              type="checkbox"
-              checked={isAutoRefresh}
-              onChange={(e) => setIsAutoRefresh(e.target.checked)}
-              className="rounded"
-              aria-label="Auto-refresh logs"
-            />
-            <span className="ml-1">Auto-refresh</span>
-          </label>
           <button
             onClick={clearAllLogs}
             className="text-sm text-gray-500 hover:text-gray-700 px-2 py-1 rounded"
           >
-            Clear
+            Clear Logs
           </button>
         </div>
       </div>

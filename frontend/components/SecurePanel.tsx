@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Shield,
-  Lock,
-  Unlock,
-  AlertCircle,
-  CheckCircle,
-  Play,
-  Zap,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { Shield, Lock, Unlock, AlertCircle, CheckCircle, Play, Zap, Eye, EyeOff, ShieldCheck, AlertTriangle } from "lucide-react";
 import axios from "axios";
 
 interface HandshakeStatus {
@@ -20,6 +10,7 @@ interface HandshakeStatus {
   session_token?: string;
   anomaly_score?: number;
   nonce?: string;
+  fakeAgentDetected?: boolean;
 }
 
 interface SecurePanelProps {
@@ -261,6 +252,7 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
 
   const simulateFakeAgent = async () => {
     setIsLoading(true);
+    setHandshakeStatus(prev => ({ ...prev, fakeAgentDetected: undefined }));
     onLog("🎭 Simulating fake agent attack...");
 
     try {
@@ -268,8 +260,10 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
 
       if (response.data.detected) {
         onLog("🚨 Fake agent detected and blocked!");
+        setHandshakeStatus(prev => ({ ...prev, fakeAgentDetected: true }));
       } else {
         onLog("⚠️ Fake agent not detected - security breach!");
+        setHandshakeStatus(prev => ({ ...prev, fakeAgentDetected: false }));
       }
     } catch (error: any) {
       onLog(
@@ -277,6 +271,7 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
           error.response?.data?.detail || error.message
         }`
       );
+      setHandshakeStatus(prev => ({ ...prev, fakeAgentDetected: false }));
     } finally {
       setIsLoading(false);
     }
@@ -355,24 +350,48 @@ export default function SecurePanel({ onLog }: Readonly<SecurePanelProps>) {
           </div>
         )}
 
-        <div className="flex gap-2">
-          <button
-            onClick={startHandshake}
-            disabled={isLoading || handshakeStatus.status === "verified"}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Play className="w-4 h-4" />
-            Start Verify (Agent A)
-          </button>
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-2">
+            <button
+              onClick={startHandshake}
+              disabled={isLoading || handshakeStatus.status === "verified"}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Play className="w-4 h-4" />
+              Start Verify (Agent A)
+            </button>
 
-          <button
-            onClick={simulateFakeAgent}
-            disabled={isLoading}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Zap className="w-4 h-4" />
-            Simulate Fake Agent
-          </button>
+            <button
+              onClick={simulateFakeAgent}
+              disabled={isLoading}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Zap className="w-4 h-4" />
+              Simulate Fake Agent
+            </button>
+          </div>
+          
+          {handshakeStatus.fakeAgentDetected !== undefined && (
+            <div className={`p-3 rounded-md ${
+              handshakeStatus.fakeAgentDetected 
+                ? 'bg-green-100 text-green-800 border border-green-200' 
+                : 'bg-red-100 text-red-800 border border-red-200'
+            }`}>
+              <div className="flex items-center gap-2">
+                {handshakeStatus.fakeAgentDetected ? (
+                  <>
+                    <ShieldCheck className="w-5 h-5 text-green-600" />
+                    <span>Security Alert: Fake agent detected and blocked!</span>
+                  </>
+                ) : (
+                  <>
+                    <AlertTriangle className="w-5 h-5 text-red-600" />
+                    <span>Security Warning: Fake agent was not detected!</span>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
