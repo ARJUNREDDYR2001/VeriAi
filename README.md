@@ -2,11 +2,6 @@
 
 > **Securing the future of autonomous agent communication with cryptographic handshakes and ML-powered fraud detection.**
 
-[![Demo](https://img.shields.io/badge/Demo-Live-green)](http://localhost:3000)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://python.org)
-[![React](https://img.shields.io/badge/React-18+-blue)](https://reactjs.org)
-
 ## 🚨 The Problem
 
 AI agents can't verify they're communicating with other legitimate AIs versus humans, bots, or malicious actors. This creates a massive security vulnerability in multi-agent systems where:
@@ -169,12 +164,6 @@ ROI: 3,500% first year
 - **🚛 Supply Chain** - Autonomous logistics coordination
 - **🏢 Enterprise** - Internal AI agent ecosystems
 
-## 🛣️ Roadmap
-
-- **Q1 2024** ✅ Core protocol + demo
-- **Q2 2024** 🔄 Enterprise SDK + blockchain attestation
-- **Q3 2024** 📋 Multi-cloud deployment + compliance
-- **Q4 2024** 🌐 Industry partnerships + scale
 
 ## 🤝 Contributing
 
@@ -197,18 +186,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📰 **Featured in** - MIT Technology Review, VentureBeat
 
 ## 📞 Contact & Support
-
-- **Demo**: [https://veriai-demo.com](http://localhost:3000)
-- **Email**: team@veriai.com
-- **Twitter**: [@VeriAI_Security](https://twitter.com/veriai)
-- **LinkedIn**: [VeriAI](https://linkedin.com/company/veriai)
+team : VeriAi
+1) Aditi A Bhat - 9480479404
+2) Arjun Reddy R - 9380724044
 
 ---
 
-<div align="center">
 
-**🔐 Securing AI Agent Communication, One Handshake at a Time**
-
-[Live Demo](http://localhost:3000) • [Documentation](docs/) • [API Reference](docs/api.md)
-
-</div>
