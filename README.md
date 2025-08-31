@@ -190,25 +190,9 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md).
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🏆 Awards & Recognition
-
-- 🥇 **Best Security Innovation** - TechCrunch Disrupt 2024
-- 🏅 **People's Choice Award** - AI Safety Hackathon
-- 📰 **Featured in** - MIT Technology Review, VentureBeat
-
 ## 📞 Contact & Support
 
-- **Demo**: [https://veriai-demo.com](http://localhost:3000)
-- **Email**: team@veriai.com
-- **Twitter**: [@VeriAI_Security](https://twitter.com/veriai)
-- **LinkedIn**: [VeriAI](https://linkedin.com/company/veriai)
+team : VeriAi
 
----
-
-<div align="center">
-
-**🔐 Securing AI Agent Communication, One Handshake at a Time**
-
-[Live Demo](http://localhost:3000) • [Documentation](docs/) • [API Reference](docs/api.md)
-
-</div>
+1) Aditi A Bhat , 9480479404
+2) Arjun Reddy R , 9380724044
