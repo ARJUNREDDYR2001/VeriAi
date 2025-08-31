@@ -149,10 +149,7 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
   };
 
   return (
-    <div
-      className="bg-white rounded-lg shadow-lg p-4 flex flex-col h-[1500px] overflow-hidden"
-      style={{ maxHeight: "500px" }}
-    >
+    <div className="h-full flex flex-col p-4 overflow-hidden">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Activity className="w-5 h-5 text-green-600" />
@@ -178,10 +175,7 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
         </div>
       </div>
 
-      <div
-        className="flex-1 overflow-y-auto space-y-2 min-h-0 pr-2 -mr-2 custom-scrollbar"
-        style={{ maxHeight: "calc(100% - 60px)" }}
-      >
+      <div className="flex-1 overflow-y-auto space-y-2 min-h-0 pr-2">
         {/* System Events */}
         {systemLogs.map((log, index) => (
           <div

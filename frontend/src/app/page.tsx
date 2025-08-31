@@ -45,17 +45,20 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex-1 w-full max-w-7xl mx-auto px-2 sm:px-4 py-4 flex flex-col">
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-4 min-h-0">
-          {/* Secure Panel - Takes 2/3 width on large screens, full width on mobile */}
-          <div className="lg:col-span-2 flex flex-col h-full">
-            <div className="flex-1 flex flex-col bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+        <div
+          className="flex flex-col lg:flex-row gap-4"
+          style={{ height: "700px" }}
+        >
+          {/* Secure Panel - Takes 60% width on large screens, full width on mobile */}
+          <div className="lg:w-3/5 w-full h-full">
+            <div className="bg-white rounded-lg shadow overflow-hidden border border-gray-200 h-full">
               <SecurePanel onLog={addLog} />
             </div>
           </div>
 
-          {/* Log Panel - Takes 1/3 width on large screens, full width on mobile */}
-          <div className="lg:col-span-1 flex flex-col">
-            <div className="flex flex-col bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+          {/* Log Panel - Takes 40% width on large screens, full width on mobile */}
+          <div className="lg:w-2/5 w-full h-full">
+            <div className="bg-white rounded-lg shadow overflow-hidden border border-gray-200 h-full">
               <LogPanel logs={logs} onClearLogs={clearLogs} />
             </div>
           </div>

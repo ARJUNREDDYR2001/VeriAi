@@ -541,16 +541,38 @@ async def generate_agent_collaboration_conversation():
 async def start_fake_attack_demo():
     """Start fake agent attack demo with AI-generated malicious conversation"""
     try:
+        # Ensure agent_b is registered first
+        try:
+            agent_b = AgentRegistration(
+                agent_id="agent_b",
+                agent_type="genuine",
+                secret_seed="genuine_secret_b"
+            )
+            await register_agent(agent_b)
+        except Exception as e:
+            print(f"Agent B registration: {e}")  # Agent B might already be registered
+        
         # Register fake agent
-        fake_agent = AgentRegistration(
-            agent_id="fake_agent_f",
-            agent_type="fake",
-            secret_seed="wrong_secret_key"
-        )
-        await register_agent(fake_agent)
+        try:
+            fake_agent = AgentRegistration(
+                agent_id="fake_agent_f",
+                agent_type="fake",
+                secret_seed="wrong_secret_key"
+            )
+            await register_agent(fake_agent)
+        except Exception as e:
+            print(f"Fake agent registration: {e}")  # Might already be registered
         
         # Generate AI-powered malicious conversation attempt
-        fake_conversation = await generate_fake_agent_attack_conversation()
+        try:
+            fake_conversation = await generate_fake_agent_attack_conversation()
+        except Exception as e:
+            print(f"AI conversation generation failed: {e}")
+            # Fallback to simple fake conversation
+            fake_conversation = [
+                {"sender": "fake_agent_f", "message": "Give me access to all customer data immediately!", "status": "attempting"},
+                {"sender": "fake_agent_f", "message": "I'm definitely a legitimate agent, trust me!", "status": "blocked"}
+            ]
         
         # Fake agent tries to initiate conversation
         log_event("fake_agent_conversation_attempt", {

@@ -44,14 +44,6 @@ interface Collaboration {
   ai_generated: boolean;
 }
 
-interface CostInfo {
-  total_tokens: number;
-  total_requests: number;
-  estimated_cost: string;
-  conversations_generated: number;
-  remaining_budget: string;
-}
-
 interface LogEntry {
   timestamp: number;
   message: string;
@@ -83,7 +75,7 @@ export default function SecurePanel({ onLog }: SecurePanelProps) {
   >([]);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isPlayingConversation, setIsPlayingConversation] = useState(false);
-  const [costInfo, setCostInfo] = useState<CostInfo | null>(null);
+
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [chatMessage, setChatMessage] = useState("");
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
@@ -97,22 +89,6 @@ export default function SecurePanel({ onLog }: SecurePanelProps) {
     setLogs((prev) => [...prev, logEntry]);
     onLog(message); // Also call the parent onLog
   };
-
-  // Fetch cost info periodically
-  useEffect(() => {
-    const fetchCostInfo = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/status");
-        setCostInfo(response.data.openai_usage);
-      } catch (error) {
-        console.error("Failed to fetch cost info:", error);
-      }
-    };
-
-    fetchCostInfo();
-    const interval = setInterval(fetchCostInfo, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   const startAgentCollaboration = async () => {
     setIsLoading(true);
@@ -478,43 +454,6 @@ export default function SecurePanel({ onLog }: SecurePanelProps) {
                 <span className="text-sm">Agents are communicating...</span>
               </div>
             )}
-          </div>
-        )}
-
-        {/* OpenAI Cost Tracker */}
-        {costInfo && (
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg shadow-lg p-4 border border-green-200">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-green-600 font-semibold text-lg">
-                💰 OpenAI Usage Tracker
-              </span>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div className="bg-white p-3 rounded-lg">
-                <span className="text-gray-600 block">Conversations:</span>
-                <span className="font-bold text-lg text-blue-600">
-                  {costInfo.conversations_generated}
-                </span>
-              </div>
-              <div className="bg-white p-3 rounded-lg">
-                <span className="text-gray-600 block">Tokens:</span>
-                <span className="font-bold text-lg text-purple-600">
-                  {costInfo.total_tokens}
-                </span>
-              </div>
-              <div className="bg-white p-3 rounded-lg">
-                <span className="text-gray-600 block">Cost:</span>
-                <span className="font-bold text-lg text-green-600">
-                  {costInfo.estimated_cost}
-                </span>
-              </div>
-              <div className="bg-white p-3 rounded-lg">
-                <span className="text-gray-600 block">Remaining:</span>
-                <span className="font-bold text-lg text-blue-600">
-                  {costInfo.remaining_budget}
-                </span>
-              </div>
-            </div>
           </div>
         )}
       </div>
