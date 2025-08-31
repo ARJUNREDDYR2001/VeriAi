@@ -118,8 +118,10 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
           3
         )}`;
       case "fake_agent_detected":
-        return `🚨 Fake agent ${data.agent_id || 'unknown'} detected and blocked! ` +
-               `| Handshake ID: ${data.handshake_id?.substring(0, 8) || 'N/A'}`;
+        return (
+          `🚨 Fake agent ${data.agent_id || "unknown"} detected and blocked! ` +
+          `| Handshake ID: ${data.handshake_id?.substring(0, 8) || "N/A"}`
+        );
       case "secure_message":
         return `Secure message: ${data.sender_id} → ${data.receiver_id} (${data.message_length} chars)`;
       case "chat_message":
@@ -147,7 +149,7 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 h-full flex flex-col overflow-hidden max-h-full">
+    <div className="h-full flex flex-col p-4 overflow-hidden">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Activity className="w-5 h-5 text-green-600" />
@@ -173,7 +175,7 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto space-y-2 min-h-0 pr-2 -mr-2 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto space-y-2 min-h-0 pr-2">
         {/* System Events */}
         {systemLogs.map((log, index) => (
           <div
@@ -194,7 +196,7 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
                     {formatTimestamp(log.timestamp)}
                   </span>
                 </div>
-                <p className="text-sm text-gray-700 mt-1">
+                <p className="text-sm text-gray-700 mt-1 break-words whitespace-pre-wrap overflow-wrap-anywhere">
                   {formatEventData(log.event_type, log.data)}
                 </p>
               </div>
@@ -205,7 +207,10 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
         {/* UI Logs */}
         {logs.map((log, index) => {
           // Create a stable key using the log content and its index
-          const logKey = `ui-${btoa(encodeURIComponent(log)).substring(0, 20)}-${index}`;
+          const logKey = `ui-${btoa(encodeURIComponent(log)).substring(
+            0,
+            20
+          )}-${index}`;
           return (
             <div
               key={logKey}
@@ -222,7 +227,9 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
                       {new Date().toLocaleTimeString()}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-700 mt-1 font-mono">{log}</p>
+                  <p className="text-sm text-gray-700 mt-1 font-mono break-words whitespace-pre-wrap overflow-wrap-anywhere">
+                    {log}
+                  </p>
                 </div>
               </div>
             </div>
@@ -241,7 +248,7 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
       </div>
 
       {/* Stats */}
-      <div className="mt-2 pt-3 border-t border-gray-200">
+      <div className="mt-auto pt-3 border-t border-gray-200">
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
             <div className="text-lg font-semibold text-blue-600">
@@ -264,8 +271,12 @@ export default function LogPanel({ logs, onClearLogs }: LogPanelProps) {
           <div>
             <div className="text-lg font-semibold text-red-600">
               {
-                systemLogs.filter((l) => l.event_type === "fake_agent_detected")
-                  .length
+                systemLogs.filter(
+                  (l) =>
+                    l.event_type === "fake_agent_detected" ||
+                    (l.event_type === "handshake_response" &&
+                      l.data.signature_valid === false)
+                ).length
               }
             </div>
             <div className="text-xs text-gray-500">Blocked</div>

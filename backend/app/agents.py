@@ -111,6 +111,7 @@ class AgentManager:
                 "content": assistant_message,
                 "timestamp": time.time(),
                 "tokens_used": response.usage.total_tokens,
+                "estimated_cost": self.estimate_cost(response.usage.total_tokens),
                 "from_cache": False
             }
             
