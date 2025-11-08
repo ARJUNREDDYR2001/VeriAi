@@ -179,11 +179,6 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md).
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🏆 Awards & Recognition
-
-- 🥇 **Best Security Innovation** - TechCrunch Disrupt 2024
-- 🏅 **People's Choice Award** - AI Safety Hackathon
-- 📰 **Featured in** - MIT Technology Review, VentureBeat
 
 ## 📞 Contact & Support
 team : VeriAi
